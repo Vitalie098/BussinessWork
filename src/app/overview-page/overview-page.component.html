@@ -1,0 +1,86 @@
+<div class="page-title">
+  <h4>
+    Prezentare generală pentru ziua de ieri
+    ({{yesterday | date:'dd.MM.yyyy'}})
+    <i class="material-icons black-text pointer" (click)="openInfo()">
+      info_outline
+    </i>
+  </h4>
+</div>
+
+<div
+  class="row"
+  *ngIf="data$ | async as data; else loader"
+>
+  <div class="col s12 l6">
+    <div class="card light-blue lighten-2 white-text">
+      <div class="card-content">
+        <span class="card-title">Venitul:</span>
+        <h3>{{data.gain.yesterday}} lei.</h3>
+        <h3
+          class="m0 mb1"
+          [ngClass]="{
+            'green-text text-darken-2': data.gain.isHigher,
+            'red-text': !data.gain.isHigher
+          }"
+        >
+          <i class="material-icons">
+            {{data.gain.isHigher ? 'arrow_upward' : 'arrow_downward'}}
+          </i>
+          {{data.gain.percent? data.gain.percent : 0}}%
+        </h3>
+        <p>
+          Venitul afacerii dumneavoastra pentru ziua de ieri
+          {{data.gain.percent? data.gain.percent : 0}}%
+          {{data.gain.isHigher ? 'mai mare' : 'mai mica'}}
+          de cat valoarea medie.
+          {{data.gain.isHigher ? 'Sunteti in profit cu' : 'Sunteti in minus cu'}}
+          {{data.gain.compare}}
+          lei.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 l6">
+    <div class="card orange lighten-2 white-text">
+      <div class="card-content">
+        <span class="card-title">Comenzi:</span>
+        <h3>{{data.orders.yesterday}} Com.</h3>
+        <h3
+          class="m0 mb1"
+          [ngClass]="{
+            'green-text text-darken-2': data.orders.isHigher,
+            'red-text': !data.orders.isHigher
+          }"
+        >
+          <i class="material-icons">
+            {{data.orders.isHigher ? 'arrow_upward' : 'arrow_downward'}}
+          </i>
+          {{data.orders.percent? data.orders.percent : 0}}%
+        </h3>
+        <p>
+          Numarul comenzilor de ieri este cu
+          {{data.orders.percent? data.orders.percent : 0}}%
+          {{data.orders.isHigher ? 'mai mare' : 'mai mica'}}
+          de cat valoarea medie.
+          {{data.orders.isHigher ? 'Numarul comenzilor a crescut cu' : 'Numaru comenzilor a scazut cu'}}
+          {{data.orders.compare}}
+          com.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+
+<div class="tap-target" data-target="menu" #tapTarget>
+  <div class="tap-target-content">
+    <h5>De ce avem nevoie de aceasta pagina?</h5>
+    <p>Pagina „Prezentare generală” va arăta dinamica vânzărilor din ziua precedentă. Comparația cu mediile vă va ajuta să înțelegeți cum merge afacerea dvs.</p>
+  </div>
+</div>
